@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  wms:
+    container_name: wmsToDB
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      PRODD: PROD
+
+volumes:
+  db:
+    driver: local

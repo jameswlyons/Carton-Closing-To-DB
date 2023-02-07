@@ -1,0 +1,29 @@
+{
+  "name": "blank-docker-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "start": "node index.js",
+    "startDev": "node build/index.js",
+    "startDevWatch": "nodemon build/index.js",
+    "startDev2Watch": "nodemon src/index.ts",
+    "startDevDockInspect": "nodemon build/index.js --inspect-brk=0.0.0.0",
+    "build": "tsc --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "dematic-master-lib": "github:jdematic/Dematic-Master-Lib#master",
+    "mysql": "^2.18.1",
+    "node-cron": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.38",
+    "@types/mysql": "^2.15.21",
+    "@types/node-cron": "^3.0.7"
+  }
+}

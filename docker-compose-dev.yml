@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  wms:
+    container_name: wmsToDBDebug
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "9229:9229"
+    environment:
+      PRODD: PROD
+    volumes:
+      - ./build/:/usr/app
+      - ./node_modules:/usr/app/node_modules
+
+volumes:
+  ignore:
