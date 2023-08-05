@@ -51,6 +51,7 @@ function updateProcess() {
 //capture crash events
 function crashProcess(err: Error) {
   console.log(`${localProcessName} crashed at ${new Date()}`);
+  console.log(err);
 
   //make timestamp for the crash time
   const crashTime = new Date();
@@ -59,16 +60,27 @@ function crashProcess(err: Error) {
   const mysqlCrashTime = crashTime.toISOString().slice(0, 19).replace("T", " ");
 
   //get crash reason
-  const crashReason = err.message;
+  const crashReason = err.message.toString();
+
+  let escapedInput = db.allInput(crashReason);
+
+  //remove the backslashes
+  escapedInput.replace(/\\/g, "");
+
+  console.log(escapedInput);
 
   //update the database if the processName is in the database already, otherwise insert it, with the crash reason
-  const sql = `INSERT INTO processTracker (processName, lastCrash, lastCrashReason) VALUES ('${localProcessName}', '${mysqlCrashTime}', '${crashReason}') ON DUPLICATE KEY UPDATE lastCrash = '${mysqlCrashTime}', lastCrashReason = '${crashReason}'`;
+  const sql = `INSERT INTO processTracker (processName, lastCrash, lastCrashReason) VALUES ('${localProcessName}', '${mysqlCrashTime}', '${escapedInput}') ON DUPLICATE KEY UPDATE lastCrash = '${mysqlCrashTime}', lastCrashReason = '${crashReason}'`;
 
   //console.log(sql);
 
   //run the sql
   db.query(sql, (err: any, result: { affectedRows: string }) => {
-    if (err) throw err;
+    if (err) {
+      console.log(err);
+
+      process.exit(1);
+    }
     //console.log("ProcessTracker: " + result.affectedRows + " record(s) updated");
     //exit the process
     process.exit(1);
