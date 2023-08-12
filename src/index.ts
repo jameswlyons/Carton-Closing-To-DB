@@ -1,7 +1,7 @@
 //Service for Dematic Dashboard Screwfix
 //Created by: JWL
 //Date: 2023/02/02 02:51:41
-//Last modified: 2023/08/05 17:56:27
+//Last modified: 2023/08/05 18:30:54
 //Version: 1.0.8
 
 //import process tracker and start the process
@@ -39,6 +39,8 @@ const amountOfLevels = 25;
 //currently in fault array
 let currentlyInFault: string[] = [];
 
+console.log("Starting v6");
+
 //add all aisles and levels to the currently in fault array
 for (let aisle = 1; aisle <= amountOfAisles; aisle++) {
   for (let level = 1; level <= amountOfLevels; level++) {
@@ -47,8 +49,8 @@ for (let aisle = 1; aisle <= amountOfAisles; aisle++) {
 }
 
 //every 5 seconds, update
-cron.schedule("*/5 * * * * *", async () => {
-  //checkAllShuttleFaults();
+cron.schedule("*/1 * * * * *", async () => {
+  checkAllShuttleFaults();
 });
 
 setTimeout(() => {
@@ -111,18 +113,18 @@ async function checkAllShuttleFaults() {
   //calculate the time taken
   const timeTaken = end - start;
 
-  //console.log("PLC to DB update took " + timeTaken + "ms");
+  console.log("PLC to DB update took " + timeTaken + "ms");
 
   //set that we are not checking all shuttles
   checkingAllShuttles = false;
 
-  checkAllShuttleFaults();
+  //checkAllShuttleFaults();
 }
 
 async function checkAisleFaults(aisle: number) {
   //for each level
   for (let level = 1; level <= amountOfLevels; level++) {
-    //console.log("Checking " + aisle + " - " + level);
+    console.log("Checking " + aisle + " - " + level);
 
     try {
       //check the shuttle faults
@@ -161,6 +163,8 @@ async function checkShuttleFaults(aisle: number, level: number) {
           //get date and time
           let date = new Date();
 
+          console.log("Shuttle was not in fault before, now in fault");
+
           let mysqlDate = date.getFullYear() + "-" + paddy(date.getMonth().toString(), 2) + "-" + paddy(date.getDate().toString(), 2);
           let mysqlTime =
             paddy(date.getHours().toString(), 2) + ":" + paddy(date.getMinutes().toString(), 2) + ":" + paddy(date.getSeconds().toString(), 2);
@@ -177,11 +181,11 @@ async function checkShuttleFaults(aisle: number, level: number) {
             faults["rawFaultNumber"] +
             "', '" +
             shuttleData["mac"] +
-            "', '" +
+            "', " +
             "CURRENT_DATE()" +
-            "', '" +
+            ", " +
             "CURRENT_TIME()" +
-            "', '" +
+            ", '" +
             faults["currentX_pos"] +
             "', '" +
             faults["currentW_pos"] +

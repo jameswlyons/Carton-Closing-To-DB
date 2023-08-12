@@ -1,7 +1,7 @@
 //Service for Dematic Dashboard Screwfix trentham to collect data
 //Created by: JWL
 //Date: 2022-12-30
-//Last modified: 2023/08/05 10:32:45
+//Last modified: 2023/08/05 18:25:18
 //Version: 0.0.1
 
 import * as mysql from "mysql";
@@ -35,6 +35,8 @@ console.log("DB Connection Pool Created");
 //function to query the DB
 export function query(sql: any, args?: any): Promise<any> {
   return new Promise((resolve, reject) => {
+    console.log("DB Query: " + sql);
+
     pool.query(sql, args, (err: any, rows: any) => {
       if (err) {
         reject(err);
