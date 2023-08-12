@@ -1,7 +1,7 @@
 //Service for Dematic Dashboard Screwfix
 //Created by: JWL
 //Date: 2023/02/02 02:51:41
-//Last modified: 2023/08/05 10:34:02
+//Last modified: 2023/08/05 17:56:27
 //Version: 1.0.8
 
 //import process tracker and start the process
@@ -178,9 +178,9 @@ async function checkShuttleFaults(aisle: number, level: number) {
             "', '" +
             shuttleData["mac"] +
             "', '" +
-            mysqlDate +
+            "CURRENT_DATE()" +
             "', '" +
-            mysqlTime +
+            "CURRENT_TIME()" +
             "', '" +
             faults["currentX_pos"] +
             "', '" +
