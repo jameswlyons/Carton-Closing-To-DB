@@ -1,7 +1,11 @@
 //Service for Dematic Dashboard Screwfix trentham to collect data
 //Created by: JWL
 //Date: 2022-12-30
+<<<<<<< HEAD
 //Last modified: 2023/07/02 09:01:28
+=======
+//Last modified: 2023/08/05 18:25:18
+>>>>>>> 125051a5983e30d4b42cd79046f74bc8c0527cf3
 //Version: 0.0.1
 
 import * as mysql from "mysql";
@@ -35,8 +39,13 @@ console.log("DB Connection Pool Created");
 //function to query the DB
 export function query(sql: any, args?: any): Promise<any> {
   return new Promise((resolve, reject) => {
+    console.log("DB Query: " + sql);
+
     pool.query(sql, args, (err: any, rows: any) => {
-      if (err) return reject(err);
+      if (err) {
+        reject(err);
+        return;
+      }
       resolve(rows);
     });
   });
@@ -50,7 +59,29 @@ function isDocker() {
   }
 }
 
+<<<<<<< HEAD
+=======
+function escapedInput(userInput: string) {
+  return mysql.escape(userInput);
+}
+function escapedInputNoQuotes(userInput: string) {
+  return mysql.escape(userInput).replace(/'/g, "");
+}
+
+function sanitizeInput(userInput: string) {
+  return userInput.replace(/\\/g, "").replace(/\\n/g, "");
+}
+
+function allInput(userInput: string) {
+  return mysql.escape(userInput).replace(/'/g, "").replace(/\\/g, "").replace(/\\n/g, "");
+}
+
+>>>>>>> 125051a5983e30d4b42cd79046f74bc8c0527cf3
 //export the functions
 export default {
   query,
+  escapedInput,
+  escapedInputNoQuotes,
+  sanitizeInput,
+  allInput,
 };
