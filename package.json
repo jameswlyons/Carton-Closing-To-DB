@@ -1,5 +1,5 @@
 {
-  "name": "blank-docker-ts",
+  "name": "set_Points_To_DB",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -19,12 +19,15 @@
   "dependencies": {
     "bluebird": "^3.7.2",
     "dematic-master-lib": "github:jdematic/Dematic-Master-Lib#master",
+    "moment": "^2.29.4",
     "mysql": "^2.18.1",
-    "node-cron": "^3.0.2"
+    "node-cron": "^3.0.2",
+    "node-snap7": "^1.0.6"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.38",
     "@types/mysql": "^2.15.21",
-    "@types/node-cron": "^3.0.7"
+    "@types/node-cron": "^3.0.7",
+    "@types/node-snap7": "^0.2.21"
   }
 }
