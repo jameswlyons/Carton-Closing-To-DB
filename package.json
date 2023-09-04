@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "set_Points_To_DB",
+=======
+  "name": "ShuttleFaultsToDB",
+>>>>>>> 4bc6a6b1ec1931d5edd56c525af6484747622557
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
