@@ -1,7 +1,7 @@
 //Service for Dematic Dashboard Screwfix trentham to read data from PLC and convert to DB
 //Created by: JWL
 //Date: 2023/02/03 03:38:36
-//Last modified: 2023/03/05 19:10:38
+//Last modified: 2023/10/01 02:05:31
 //Version: 0.0.1
 
 //import plc
@@ -35,8 +35,29 @@ async function plcToDB(ip: string, rack: number, slot: number, area: number, db:
         });
 
       break;
+    case snap7Types.Area.S7AreaMK:
+      //read data from PLC
+      await plc
+        .readFromMarkerBit(ip, rack, slot, db, offset)
+
+        .then(async (result) => {
+          //sql query to insert data into DB
+          let sql =
+            "INSERT INTO parameters (parameter, value, hidden) VALUES ('" +
+            dbName +
+            "', ? , 0) ON DUPLICATE KEY UPDATE value = ? , lastModified = current_timestamp() ";
+
+          //insert data into DB
+          let sqlResult = await mysql.query(sql, [result, result]);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      break;
 
     default:
+      console.log("Invalid area");
       break;
   }
 }
