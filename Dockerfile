@@ -22,4 +22,4 @@ COPY ./build /usr/app
 EXPOSE 3000
 
 #CMD ["nodemon", "index.js"]
-CMD ["forever", "index.js"]
+CMD ["node", "index.js"]

@@ -61,11 +61,12 @@ function crashProcess(err: Error) {
 
   //get crash reason
   const crashReason = err.message;
+  console.log("Crash reason: " + crashReason);
 
   //update the database if the processName is in the database already, otherwise insert it, with the crash reason
   const sql = `INSERT INTO processTracker (processName, lastCrash, lastCrashReason) VALUES ('${localProcessName}', '${mysqlCrashTime}', '${crashReason}') ON DUPLICATE KEY UPDATE lastCrash = '${mysqlCrashTime}', lastCrashReason = '${crashReason}'`;
 
-  //console.log(sql);
+  console.log(sql);
 
   //run the sql
   db.query(sql, (err: any, result: { affectedRows: string }) => {
