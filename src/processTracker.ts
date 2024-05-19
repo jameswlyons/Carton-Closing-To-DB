@@ -51,6 +51,7 @@ function updateProcess() {
 //capture crash events
 function crashProcess(err: Error) {
   console.log(`${localProcessName} crashed at ${new Date()}`);
+  console.log(err);
 
   //make timestamp for the crash time
   const crashTime = new Date();

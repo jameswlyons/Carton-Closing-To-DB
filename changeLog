@@ -1,1 +1,2 @@
 v1.0.0 - Release
+v1.0.1 - added await for all to promise each machine all together and not one by one to speed up the process
